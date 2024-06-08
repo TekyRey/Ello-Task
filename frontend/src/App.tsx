@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import SearchBar from "./components/SearchBar";
 import BookList from "./components/BookList";
 import ReadingList from "./components/ReadingList";
-import { Box, Container, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
 import { useQuery } from "@apollo/client";
 import { GET_BOOKS } from "./services/graphqlQueries";
 
@@ -25,7 +25,7 @@ const App: React.FC = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <Container>
+    <Box sx={{ padding: 2 }}>
       <Grid container spacing={2}>
         <Grid item xs={9}>
           <Box mt={2}>
@@ -47,7 +47,7 @@ const App: React.FC = () => {
           <ReadingList />
         </Grid>
       </Grid>
-    </Container>
+    </Box>
   );
 };
 
