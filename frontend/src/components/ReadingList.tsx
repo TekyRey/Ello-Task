@@ -4,50 +4,54 @@ import {
   Button,
   Typography,
   Card,
-  CardContent,
-  CardMedia,
-  Grid,
   IconButton,
+  CardMedia,
 } from "@mui/material";
 import { useReadingList } from "../context/ReadingListContext";
-// import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const ReadingList: React.FC = () => {
   const { readingList, removeFromReadingList } = useReadingList();
 
   return (
-    <Box sx={{ maxHeight: "80vh", overflowY: "auto" }}>
-      <Typography variant="h5" mb={2}>
+    <Card sx={{ maxHeight: "80vh", overflowY: "auto", p: 1 }}>
+      <Typography variant="h6" mb={1}>
         Reading List
       </Typography>
       {readingList.length === 0 ? (
         <Typography>Your reading list will appear here.</Typography>
       ) : (
         readingList.map((book) => (
-          <Card
+          <Box
             key={book.title}
-            sx={{ display: "flex", mb: 2, alignItems: "center" }}
+            sx={{ display: "flex", alignItems: "center", mb: 1 }}
           >
             <CardMedia
               component="img"
-              sx={{ width: 50, height: 75, marginRight: 1 }}
+              sx={{ width: 40, height: 60, mr: 1, borderRadius: 1 }}
               image={require(`../${book.coverPhotoURL}`)}
               alt={`Cover of ${book.title}`}
             />
-            <CardContent sx={{ flexGrow: 1 }}>
-              <Typography variant="subtitle2">{book.title}</Typography>
-              <Typography variant="body2">{`by ${book.author}`}</Typography>
-            </CardContent>
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="subtitle2" noWrap>
+                {book.title}
+              </Typography>
+              <Typography
+                variant="body2"
+                noWrap
+              >{`by ${book.author}`}</Typography>
+            </Box>
             <IconButton
+              size="small"
               color="secondary"
               onClick={() => removeFromReadingList(book.title)}
             >
-              {/* <DeleteIcon /> */}
+              <DeleteIcon />
             </IconButton>
-          </Card>
+          </Box>
         ))
       )}
-    </Box>
+    </Card>
   );
 };
 

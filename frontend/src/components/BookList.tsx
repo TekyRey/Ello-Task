@@ -1,16 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_BOOKS } from "../services/graphqlQueries";
-import {
-  Box,
-  Button,
-  Typography,
-  Card,
-  CardContent,
-  CardMedia,
-  CardActions,
-  Grid,
-} from "@mui/material";
+import { Box, Button, Typography, Grid, Card } from "@mui/material";
 import { useReadingList } from "../context/ReadingListContext";
 
 interface BookListProps {
@@ -36,40 +27,50 @@ const BookList: React.FC<BookListProps> = ({ searchTerm }) => {
   };
 
   return (
-    <Grid container spacing={3}>
-      {filteredBooks.map((book: any) => (
-        <Grid item xs={12} sm={6} md={4} key={book.title}>
-          <Card
-            sx={{ display: "flex", flexDirection: "column", height: "100%" }}
-          >
-            <CardMedia
-              component="img"
+    <Card sx={{ maxHeight: "80vh", overflowY: "auto", p: 1 }}>
+      <Grid container spacing={3}>
+        {filteredBooks.map((book: any) => (
+          <Grid item xs={12} sm={6} md={3} key={book.title}>
+            <Box
               sx={{
-                height: 200,
-                boxShadow: 3,
-                borderRadius: 1,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
               }}
-              image={require(`../${book.coverPhotoURL}`)}
-              alt={`Cover of ${book.title}`}
-              onError={() => handleImageError(book.title)}
-            />
-            <CardContent sx={{ flexGrow: 1 }}>
-              <Typography variant="subtitle1">{book.title}</Typography>
-              <Typography variant="body2">{`by ${book.author}`}</Typography>
-            </CardContent>
-            <CardActions>
-              <Button
-                variant="contained"
-                onClick={() => addToReadingList(book)}
-                // startIcon={<AddIcon />}
-              >
-                Add to Reading List
-              </Button>
-            </CardActions>
-          </Card>
-        </Grid>
-      ))}
-    </Grid>
+            >
+              <Box
+                component="img"
+                sx={{
+                  height: 250,
+                  width: 200,
+                  boxShadow: 3,
+                  borderRadius: 1,
+                  mb: 1,
+                }}
+                src={require(`../${book.coverPhotoURL}`)}
+                alt={`Cover of ${book.title}`}
+                onError={() => handleImageError(book.title)}
+              />
+              <Box sx={{ textAlign: "center", height: 200, width: 150 }}>
+                <Typography variant="body2" gutterBottom>
+                  {book.title}
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                  {`by ${book.author}`}
+                </Typography>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => addToReadingList(book)}
+                >
+                  Add to Reading List
+                </Button>
+              </Box>
+            </Box>
+          </Grid>
+        ))}
+      </Grid>
+    </Card>
   );
 };
 
