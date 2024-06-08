@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600&display=swap');
+
+body {
+  font-family: 'Mulish', sans-serif;
+}
+
+:root {
+  --primary-color: #5472D3;
+  --secondary-color: #EC407A;
+  --background-color: #F5F5F5;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+button:hover {
+  background-color: var(--secondary-color);
+}
