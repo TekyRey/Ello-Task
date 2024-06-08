@@ -14,6 +14,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm }) => {
       fullWidth
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}
+      sx={{ mb: 3 }}
     />
   );
 };

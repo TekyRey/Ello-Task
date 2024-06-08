@@ -7,14 +7,16 @@ import {
   CardContent,
   CardMedia,
   Grid,
+  IconButton,
 } from "@mui/material";
 import { useReadingList } from "../context/ReadingListContext";
+// import DeleteIcon from "@mui/icons-material/Delete";
 
 const ReadingList: React.FC = () => {
   const { readingList, removeFromReadingList } = useReadingList();
 
   return (
-    <Box>
+    <Box sx={{ maxHeight: "80vh", overflowY: "auto" }}>
       <Typography variant="h5" mb={2}>
         Reading List
       </Typography>
@@ -22,23 +24,26 @@ const ReadingList: React.FC = () => {
         <Typography>Your reading list will appear here.</Typography>
       ) : (
         readingList.map((book) => (
-          <Card key={book.title} sx={{ display: "flex", mb: 2 }}>
+          <Card
+            key={book.title}
+            sx={{ display: "flex", mb: 2, alignItems: "center" }}
+          >
             <CardMedia
               component="img"
-              sx={{ width: 50, height: 100 }}
+              sx={{ width: 50, height: 75, marginRight: 1 }}
               image={require(`../${book.coverPhotoURL}`)}
               alt={`Cover of ${book.title}`}
             />
-            <CardContent sx={{ display: "flex", flexDirection: "column" }}>
+            <CardContent sx={{ flexGrow: 1 }}>
               <Typography variant="subtitle2">{book.title}</Typography>
               <Typography variant="body2">{`by ${book.author}`}</Typography>
-              <Button
-                variant="contained"
-                onClick={() => removeFromReadingList(book.title)}
-              >
-                Remove
-              </Button>
             </CardContent>
+            <IconButton
+              color="secondary"
+              onClick={() => removeFromReadingList(book.title)}
+            >
+              {/* <DeleteIcon /> */}
+            </IconButton>
           </Card>
         ))
       )}
