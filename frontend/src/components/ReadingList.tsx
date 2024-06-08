@@ -33,7 +33,7 @@ const ReadingList: React.FC = () => {
               alt={`Cover of ${book.title}`}
             />
             <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="subtitle2" noWrap>
+              <Typography variant="body2" noWrap>
                 {book.title}
               </Typography>
               <Typography
