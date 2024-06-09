@@ -49,69 +49,71 @@ const ReadingList: React.FC = () => {
 
   return (
     <>
-      <Card sx={{ maxHeight: "80vh", overflowY: "auto", p: 1 }}>
+      <Box>
         <Typography variant="h6" mb={1}>
           Reading List
         </Typography>
-        {readingList.length === 0 ? (
-          <Typography>Your reading list will appear here.</Typography>
-        ) : (
-          readingList.map((book) => (
-            <Box
-              key={book.title}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                position: "relative",
-                mb: 2,
-                p: 1,
-                borderRadius: 1,
-                border: 1,
-                borderColor: "grey.300",
-              }}
-            >
-              <CardMedia
-                component="img"
-                sx={{ width: 50, height: 75, mr: 2, borderRadius: 1 }}
-                image={require(`../${book.coverPhotoURL}`)}
-                alt={`Cover of ${book.title}`}
-              />
+        <Card sx={{ maxHeight: "80vh", overflowY: "auto", p: 1 }}>
+          {readingList.length === 0 ? (
+            <Typography>Your reading list will appear here.</Typography>
+          ) : (
+            readingList.map((book) => (
               <Box
+                key={book.title}
                 sx={{
-                  flexGrow: 1,
-                  overflow: "hidden",
-                  mr: 2,
                   display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "flex-start",
+                  alignItems: "center",
+                  position: "relative",
+                  mb: 2,
+                  p: 1,
+                  borderRadius: 1,
+                  border: 1,
+                  borderColor: "grey.300",
                 }}
               >
-                <Typography variant="body2" sx={{ wordBreak: "break-word" }}>
-                  {book.title}
-                </Typography>
-                <Typography variant="body2" sx={{ wordBreak: "break-word" }}>
-                  {`by ${book.author}`}
-                </Typography>
+                <CardMedia
+                  component="img"
+                  sx={{ width: 50, height: 75, mr: 2, borderRadius: 1 }}
+                  image={require(`../${book.coverPhotoURL}`)}
+                  alt={`Cover of ${book.title}`}
+                />
+                <Box
+                  sx={{
+                    flexGrow: 1,
+                    overflow: "hidden",
+                    mr: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "flex-start",
+                  }}
+                >
+                  <Typography variant="body2" sx={{ wordBreak: "break-word" }}>
+                    {book.title}
+                  </Typography>
+                  <Typography variant="body2" sx={{ wordBreak: "break-word" }}>
+                    {`by ${book.author}`}
+                  </Typography>
+                </Box>
+                <Divider orientation="vertical" flexItem sx={{ mr: 4 }} />
+                <IconButton
+                  size="small"
+                  color="error"
+                  sx={{
+                    position: "absolute",
+                    right: 8, // Ensure consistent positioning
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                  }}
+                  onClick={() => handleDeleteClick(book.title)}
+                >
+                  <DeleteIcon />
+                </IconButton>
               </Box>
-              <Divider orientation="vertical" flexItem sx={{ mr: 4 }} />
-              <IconButton
-                size="small"
-                color="error"
-                sx={{
-                  position: "absolute",
-                  right: 8, // Ensure consistent positioning
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                }}
-                onClick={() => handleDeleteClick(book.title)}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Box>
-          ))
-        )}
-      </Card>
+            ))
+          )}
+        </Card>
+      </Box>
       {/* Confirmation Dialog */}
       <Dialog open={openDialog} onClose={handleCloseDialog}>
         <DialogTitle>Confirm Removal</DialogTitle>

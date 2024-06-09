@@ -15,6 +15,7 @@ import {
 interface SearchBarProps {
   searchTerm: string;
   setSearchTerm: (term: string) => void;
+  setSelectedBook: (book: Book | null) => void;
 }
 
 interface Book {
@@ -23,7 +24,11 @@ interface Book {
   author: string;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm }) => {
+const SearchBar: React.FC<SearchBarProps> = ({
+  searchTerm,
+  setSearchTerm,
+  setSelectedBook,
+}) => {
   const { data } = useQuery(GET_BOOKS);
   const [options, setOptions] = useState<Array<string | Book>>([]);
 
@@ -37,9 +42,22 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm }) => {
     setSearchTerm(newInputValue);
     if (data) {
       const filteredOptions = data.books.filter((book: Book) =>
-        book.title.toLowerCase().includes(newInputValue.toLowerCase())
+        `${book.title.toLowerCase()} ${book.author.toLowerCase()}`.includes(
+          newInputValue.toLowerCase()
+        )
       );
       setOptions(filteredOptions);
+    }
+  };
+
+  const handleOptionSelect = (
+    event: any,
+    selectedOption: string | Book | null
+  ) => {
+    if (typeof selectedOption === "object" && selectedOption !== null) {
+      setSelectedBook(selectedOption);
+    } else {
+      setSelectedBook(null);
     }
   };
 
@@ -49,28 +67,38 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm }) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        // marginTop: "10vh",
+        mt: { xs: 2, md: 4 },
+        px: { xs: 2, md: 4 },
       }}
     >
       <Autocomplete
         freeSolo
         options={options}
-        getOptionLabel={(option: string | Book) => {
-          if (typeof option === "string") return option;
-          return option.title;
-        }}
+        getOptionLabel={(option: string | Book) =>
+          typeof option === "string"
+            ? option
+            : `${option.title} by ${option.author}`
+        }
         onInputChange={handleInputChange}
+        onChange={handleOptionSelect}
         renderOption={(props, option: Book | string) => {
           if (typeof option === "string") {
             return (
-              <ListItem {...props}>
+              <ListItem {...props} key={option}>
                 <ListItemText primary={option} />
               </ListItem>
             );
           } else {
             return (
-              <ListItem {...props} sx={{ 
-               background: 'background.default', alignItems: "flex-start", p: 1 }}>
+              <ListItem
+                {...props}
+                key={`${option.title}-${option.author}`}
+                sx={{
+                  background: "background.default",
+                  alignItems: "flex-start",
+                  p: 1,
+                }}
+              >
                 <ListItemAvatar>
                   <CardMedia
                     component="img"
@@ -95,7 +123,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm }) => {
             placeholder="Search books"
             variant="outlined"
             sx={{
-              width: 600,
+              width: { xs: "90%", sm: "80%", md: 600 },
               ".MuiOutlinedInput-root": {
                 borderRadius: "50px",
                 paddingRight: 0,
@@ -117,7 +145,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm }) => {
               boxShadow: "0 1px 6px rgba(32,33,36,0.28)",
               marginTop: "20px",
               overflow: "hidden",
-            backgroundColor: "rgba(255, 255, 255, 0.9)",
+              backgroundColor: "rgba(255, 255, 255, 0.9)",
             }}
           >
             {children}

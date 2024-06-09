@@ -35,17 +35,17 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
 
   return (
     <Card sx={{ maxHeight: "80vh", overflowY: "auto", p: 1 }}>
-      <Grid container spacing={0}>
+      <Grid container spacing={2}>
         {books.map((book: any) => (
-          <Grid item xs={12} sm={6} md={3} key={book.title}>
-            <Box
-              sx={{
-                position: "relative",
-                mb: 3,
-                ml: 3,
-                overflow: "visible",
-              }}
-            >
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={4}
+            lg={3}
+            key={`${book.title}-${book.author}`}
+          >
+            <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
               <Card
                 sx={{
                   position: "relative",
@@ -60,7 +60,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
                   color: "secondary",
                   bgcolor: "background.default",
                   variant: "outlined",
-                  overflow: "visible", // Ensure overflow is visible
+                  overflow: "visible",
                 }}
               >
                 <Box
@@ -89,17 +89,17 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
                   componentsProps={{
                     tooltip: {
                       sx: {
-                        fontSize: "14px", 
-                        backgroundColor: "primary.main", 
-                        color: "success.main", 
-                        fontWeight: 600, 
-                        adding: "8px", 
-                        borderRadius: "4px", 
+                        fontSize: "14px",
+                        backgroundColor: "primary.main",
+                        color: "success.main",
+                        fontWeight: 600,
+                        padding: "8px",
+                        borderRadius: "4px",
                       },
                     },
                     arrow: {
                       sx: {
-                        color: "primary.main", // Match arrow color to tooltip
+                        color: "primary.main",
                       },
                     },
                   }}
@@ -110,9 +110,9 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
                     onClick={() => handleAddToReadingList(book)}
                     sx={{
                       position: "absolute",
-                      bottom: -15, // Adjust to be half inside and half outside
+                      bottom: -15,
                       right: -15,
-                      zIndex: 2, // Ensure it is on top
+                      zIndex: 2,
                     }}
                   >
                     <AddIcon />

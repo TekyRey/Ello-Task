@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import './index.css';
+import "./index.css";
 import SearchBar from "./components/SearchBar";
 import BookList from "./components/BookList";
 import ReadingList from "./components/ReadingList";
@@ -10,13 +10,16 @@ import { GET_BOOKS } from "./services/graphqlQueries";
 const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredBooks, setFilteredBooks] = useState<any[]>([]);
+  const [selectedBook, setSelectedBook] = useState<any | null>(null);
   const { data, loading, error } = useQuery(GET_BOOKS);
 
   useEffect(() => {
     if (data) {
       const books = data.books;
       const results = books.filter((book: any) =>
-        book.title.toLowerCase().includes(searchTerm.toLowerCase())
+        `${book.title.toLowerCase()} ${book.author.toLowerCase()}`.includes(
+          searchTerm.toLowerCase()
+        )
       );
       setFilteredBooks(results);
     }
@@ -30,20 +33,22 @@ const App: React.FC = () => {
       <Grid container spacing={2}>
         <Grid item xs={9}>
           <Box mt={2}>
-
-            <Avatar
-              src={require("./assets/ello.png")}
-              sx={{ width: 70, }}
-            />
-
+            <Avatar src={require("./assets/ello.png")} sx={{ width: 70 }} />
             <Box mb={2}>
               <SearchBar
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
+                setSelectedBook={setSelectedBook}
               />
             </Box>
             <BookList
-              books={filteredBooks.length > 0 ? filteredBooks : data.books}
+              books={
+                selectedBook
+                  ? [selectedBook]
+                  : filteredBooks.length > 0
+                  ? filteredBooks
+                  : data.books
+              }
             />
           </Box>
         </Grid>
