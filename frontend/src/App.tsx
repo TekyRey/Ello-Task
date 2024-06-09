@@ -5,15 +5,16 @@ import BookList from "./components/BookList";
 import ReadingList from "./components/ReadingList";
 import {
   Box,
-  Typography,
   Grid,
   Avatar,
-  Button,
+  IconButton,
   useMediaQuery,
-  Modal,
+  Drawer,
+  Typography,
 } from "@mui/material";
 import { useQuery } from "@apollo/client";
 import { GET_BOOKS } from "./services/graphqlQueries";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -21,7 +22,7 @@ const App: React.FC = () => {
   const [selectedBook, setSelectedBook] = useState<any | null>(null);
   const { data, loading, error } = useQuery(GET_BOOKS);
   const isMobileOrTablet = useMediaQuery("(max-width: 768px)");
-  const [modalOpen, setModalOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     if (data) {
@@ -35,18 +36,39 @@ const App: React.FC = () => {
     }
   }, [data, searchTerm]);
 
-  const handleOpenModal = () => {
-    setModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
+  const toggleDrawer =
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
+      setDrawerOpen(open);
+    };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
+
   return (
-    <Box sx={{ padding: 2 }}>
+    <Box sx={{ padding: 2, position: "relative" }}>
+      {isMobileOrTablet && (
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          onClick={toggleDrawer(true)}
+          sx={{
+            position: "absolute",
+            top: 10,
+            left: 10,
+            zIndex: 1000,
+          }}
+        >
+          <MenuIcon />
+        </IconButton>
+      )}
       <Grid container spacing={2}>
         <Grid item xs={12} md={9}>
           <Box mt={2}>
@@ -58,16 +80,6 @@ const App: React.FC = () => {
                 setSelectedBook={setSelectedBook}
               />
             </Box>
-            {isMobileOrTablet && (
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleOpenModal}
-                sx={{ mt: 2, mb: 2 }}
-              >
-                View Reading List
-              </Button>
-            )}
             <BookList
               books={
                 selectedBook
@@ -82,26 +94,19 @@ const App: React.FC = () => {
         {!isMobileOrTablet && <ReadingList />}
       </Grid>
       {isMobileOrTablet && (
-        <Modal open={modalOpen} onClose={handleCloseModal}>
+        <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
           <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "90%",
-              bgcolor: "background.paper",
-              boxShadow: 24,
-              p: 4,
-              borderRadius: 1,
-            }}
+            sx={{ width: 250 }}
+            role="presentation"
+            onClick={toggleDrawer(false)}
+            onKeyDown={toggleDrawer(false)}
           >
+            <Typography variant="h6" sx={{ p: 2 }}>
+              Reading List
+            </Typography>
             <ReadingList />
-            <Button onClick={handleCloseModal} sx={{ mt: 2 }}>
-              Close
-            </Button>
           </Box>
-        </Modal>
+        </Drawer>
       )}
     </Box>
   );

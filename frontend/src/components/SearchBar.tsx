@@ -69,6 +69,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         alignItems: "center",
         mt: { xs: 2, md: 4 },
         px: { xs: 2, md: 4 },
+        width: "100%",
       }}
     >
       <Autocomplete
@@ -123,7 +124,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
             placeholder="Search books"
             variant="outlined"
             sx={{
-              width: { xs: "90%", sm: "80%", md: 600 },
+              width: { xs: "100%", sm: "80%", md: 600 },
               ".MuiOutlinedInput-root": {
                 borderRadius: "50px",
                 paddingRight: 0,
