@@ -14,7 +14,8 @@ const ReadingList: React.FC = () => {
   const { readingList, removeFromReadingList } = useReadingList();
 
   return (
-    <Card sx={{ maxHeight: "80vh", overflowY: "auto", p: 1 }}>
+    <Card sx={{ 
+        maxHeight: "80vh", overflowY: "auto", p: 1, color: 'primary' }}>
       <Typography variant="h6" mb={1}>
         Reading List
       </Typography>

@@ -3,7 +3,7 @@ import './index.css';
 import SearchBar from "./components/SearchBar";
 import BookList from "./components/BookList";
 import ReadingList from "./components/ReadingList";
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid, Avatar } from "@mui/material";
 import { useQuery } from "@apollo/client";
 import { GET_BOOKS } from "./services/graphqlQueries";
 
@@ -30,17 +30,12 @@ const App: React.FC = () => {
       <Grid container spacing={2}>
         <Grid item xs={9}>
           <Box mt={2}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                marginBottom: 2,
-              }}
-            >
-              <Typography variant="h4">Book Finder</Typography>
-             
-            </Box>
+
+            <Avatar
+              src={require("./assets/ello.png")}
+              sx={{ width: 70, }}
+            />
+
             <Box mb={2}>
               <SearchBar
                 searchTerm={searchTerm}

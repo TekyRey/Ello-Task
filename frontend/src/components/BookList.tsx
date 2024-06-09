@@ -22,8 +22,25 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
     <Card sx={{ maxHeight: "80vh", overflowY: "auto", p: 1 }}>
       <Grid container spacing={0}>
         {books.map((book: any) => (
-          <Grid item xs={12} sm={6} md={3} key={book.title}>
-            
+          <Card 
+          sx= {{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            flexGrow: 1,
+            boxShadow: 10,
+            borderRadius: 1,
+            height: 330,
+            width: 200,
+            mb: 3,
+            ml: 3,
+            color: 'secondary',
+            bgcolor: 'background.default',
+            variant: 'outlined',
+          
+          }}
+          key={book.title}>
+            <Grid item xs={12} sm={6} md={3} key={book.title}>
               <Box
                 sx={{
                   display: "flex",
@@ -36,7 +53,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
                   component="img"
                   sx={{
                     height: 250,
-                    width: 200,
+                    // width: 200,
                     boxShadow: 10,
                     borderRadius: 1,
                     mb: 1,
@@ -44,7 +61,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
                   src={require(`../${book.coverPhotoURL}`)}
                   alt={`Cover of ${book.title}`}
                 />
-                <Box sx={{ textAlign: "center", width: 200, flexGrow: 1 }}>
+                <Box sx={{ width: 200, flexGrow: 1 }}>
                   <Typography variant="body2" gutterBottom>
                     {book.title}
                   </Typography>
@@ -54,17 +71,26 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
                 </Box>
               </Box>
               <CardActions>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  fullWidth
-                  onClick={() => addToReadingList(book)}
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    flexGrow: 1,
+                  }}
                 >
-                  Add to Reading List
-                </Button>
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    size="small"
+                    // fullWidth
+                    onClick={() => addToReadingList(book)}
+                  >
+                    Add to Reading List
+                  </Button>
+                </Box>
               </CardActions>
-            
-          </Grid>
+            </Grid>
+          </Card>
         ))}
       </Grid>
     </Card>

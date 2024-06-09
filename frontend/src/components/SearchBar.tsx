@@ -69,7 +69,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm }) => {
             );
           } else {
             return (
-              <ListItem {...props} sx={{ alignItems: "flex-start", p: 1 }}>
+              <ListItem {...props} sx={{ 
+               background: 'background.default', alignItems: "flex-start", p: 1 }}>
                 <ListItemAvatar>
                   <CardMedia
                     component="img"
