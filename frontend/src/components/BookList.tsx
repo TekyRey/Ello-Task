@@ -34,7 +34,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
   };
 
   return (
-    <Card sx={{ maxHeight: "80vh", overflowY: "auto", p: 1 }}>
+    <Card sx={{ maxHeight: "80vh", overflowY: "auto", p: 3 }}>
       <Grid container spacing={2}>
         {books.map((book: any) => (
           <Grid
@@ -43,6 +43,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
             sm={6}
             md={4}
             lg={3}
+            
             key={`${book.title}-${book.author}`}
           >
             <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
@@ -67,7 +68,9 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
                   component="img"
                   sx={{
                     height: 250,
-                    width: 200,
+                    objectFit: "cover",
+                    width: "100%",
+
                     boxShadow: 10,
                     borderRadius: 1,
                     mb: 1,
