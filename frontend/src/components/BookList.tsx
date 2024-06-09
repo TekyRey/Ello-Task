@@ -23,9 +23,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
       <Grid container spacing={0}>
         {books.map((book: any) => (
           <Grid item xs={12} sm={6} md={3} key={book.title}>
-            <Card
-              sx={{ display: "flex", flexDirection: "column", height: "100%" }}
-            >
+            
               <Box
                 sx={{
                   display: "flex",
@@ -39,7 +37,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
                   sx={{
                     height: 250,
                     width: 200,
-                    boxShadow: 2,
+                    boxShadow: 10,
                     borderRadius: 1,
                     mb: 1,
                   }}
@@ -65,7 +63,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
                   Add to Reading List
                 </Button>
               </CardActions>
-            </Card>
+            
           </Grid>
         ))}
       </Grid>

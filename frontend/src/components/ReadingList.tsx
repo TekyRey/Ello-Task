@@ -28,7 +28,7 @@ const ReadingList: React.FC = () => {
           >
             <CardMedia
               component="img"
-              sx={{ width: 40, height: 60, mr: 1, borderRadius: 1 }}
+              sx={{ width: 20, height: 30, mr: 1, borderRadius: 1 }}
               image={require(`../${book.coverPhotoURL}`)}
               alt={`Cover of ${book.title}`}
             />

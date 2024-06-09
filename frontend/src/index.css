@@ -1,11 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600&display=swap');
+/* index.css */
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 body {
-  font-family: 'Mulish', sans-serif;
+  font-family: "Mulish", sans-serif;
+}
+
+#root {
+  font-family: "Mulish", sans-serif;
 }
 
 :root {
-  --primary-color: #5472D3;
+  --primary-color: #5ACCCC;
   --secondary-color: #EC407A;
   --background-color: #F5F5F5;
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import './index.css';
 import SearchBar from "./components/SearchBar";
 import BookList from "./components/BookList";
 import ReadingList from "./components/ReadingList";
@@ -29,9 +30,17 @@ const App: React.FC = () => {
       <Grid container spacing={2}>
         <Grid item xs={9}>
           <Box mt={2}>
-            <Typography variant="h5" mb={2}>
-              Book Search
-            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginBottom: 2,
+              }}
+            >
+              <Typography variant="h4">Book Finder</Typography>
+             
+            </Box>
             <Box mb={2}>
               <SearchBar
                 searchTerm={searchTerm}
