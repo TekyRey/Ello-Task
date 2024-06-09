@@ -9,7 +9,7 @@ interface Book {
 
 interface ReadingListContextType {
   readingList: Book[];
-  addToReadingList: (book: Book) => void;
+  addToReadingList: (book: Book) => boolean; // Return a boolean indicating success or failure
   removeFromReadingList: (title: string) => void;
 }
 
@@ -22,8 +22,12 @@ export const ReadingListProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [readingList, setReadingList] = useState<Book[]>([]);
 
-  const addToReadingList = (book: Book) => {
+  const addToReadingList = (book: Book): boolean => {
+    if (readingList.some((item) => item.title === book.title)) {
+      return false; // Book already exists
+    }
     setReadingList((prevList) => [...prevList, book]);
+    return true; // Book added successfully
   };
 
   const removeFromReadingList = (title: string) => {
@@ -48,4 +52,3 @@ export const useReadingList = () => {
   }
   return context;
 };
-
