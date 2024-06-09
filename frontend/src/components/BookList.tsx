@@ -19,7 +19,7 @@ interface BookListProps {
 const placeholderImage = "url_to_placeholder_image"; // Replace with a valid placeholder URL
 
 const BookList: React.FC<BookListProps> = ({ books }) => {
-  const { readingList, addToReadingList } = useReadingList();
+  const { addToReadingList } = useReadingList();
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleAddToReadingList = (book: any) => {
@@ -38,59 +38,68 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
       <Grid container spacing={0}>
         {books.map((book: any) => (
           <Grid item xs={12} sm={6} md={3} key={book.title}>
-            <Card
+            <Box
               sx={{
                 position: "relative",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                flexGrow: 1,
-                boxShadow: 10,
-                borderRadius: 1,
-                height: 330,
-                width: 200,
                 mb: 3,
                 ml: 3,
-                color: "secondary",
-                bgcolor: "background.default",
-                variant: "outlined",
+                overflow: "visible", // Allow overflow to be visible
               }}
             >
-              <Box
-                component="img"
+              <Card
                 sx={{
-                  height: 250,
+                  position: "relative",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  flexGrow: 1,
                   boxShadow: 10,
                   borderRadius: 1,
-                  mb: 1,
+                  height: 330,
+                  width: 200,
+                  color: "secondary",
+                  bgcolor: "background.default",
+                  variant: "outlined",
+                  overflow: "visible", // Ensure overflow is visible
                 }}
-                src={require(`../${book.coverPhotoURL}`)}
-                alt={`Cover of ${book.title}`}
-              />
-              <Box sx={{ width: 180, textAlign: "center", px: 2 }}>
-                <Typography variant="body2" gutterBottom>
-                  {book.title}
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  {`by ${book.author}`}
-                </Typography>
-              </Box>
-              <Tooltip title="Add to reading list">
-                <Fab
-                  color="success"
-                  size="small"
-                  onClick={() => handleAddToReadingList(book)}
+              >
+                <Box
+                  component="img"
                   sx={{
-                    position: "absolute",
-                    bottom: -20, // Half inside, half outside
-                    right: -10,
-                    zIndex: 1,
+                    height: 250,
+                    width: 200, 
+                    boxShadow: 10,
+                    borderRadius: 1,
+                    mb: 1,
                   }}
-                >
-                  <AddIcon />
-                </Fab>
-              </Tooltip>
-            </Card>
+                  src={require(`../${book.coverPhotoURL}`)}
+                  alt={`Cover of ${book.title}`}
+                />
+                <Box sx={{ width: 180, textAlign: "center", px: 2 }}>
+                  <Typography variant="body2" gutterBottom>
+                    {book.title}
+                  </Typography>
+                  <Typography variant="body2" gutterBottom>
+                    {`by ${book.author}`}
+                  </Typography>
+                </Box>
+                <Tooltip title="Add to reading list">
+                  <Fab
+                    color="success"
+                    size="small"
+                    onClick={() => handleAddToReadingList(book)}
+                    sx={{
+                      position: "absolute",
+                      bottom: -15, // Adjust to be half inside and half outside
+                      right: -15,
+                      zIndex: 2, // Ensure it is on top
+                    }}
+                  >
+                    <AddIcon />
+                  </Fab>
+                </Tooltip>
+              </Card>
+            </Box>
           </Grid>
         ))}
       </Grid>
