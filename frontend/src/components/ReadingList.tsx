@@ -22,16 +22,19 @@ const ReadingList: React.FC = () => {
   const { readingList, removeFromReadingList } = useReadingList();
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
-  const [selectedBook, setSelectedBook] = useState<string | null>(null);
+  const [selectedBook, setSelectedBook] = useState<{
+    title: string;
+    author: string;
+  } | null>(null);
 
-  const handleDeleteClick = (title: string) => {
-    setSelectedBook(title);
+  const handleDeleteClick = (title: string, author: string) => {
+    setSelectedBook({ title, author });
     setOpenDialog(true);
   };
 
   const handleConfirmDelete = () => {
     if (selectedBook) {
-      removeFromReadingList(selectedBook);
+      removeFromReadingList(selectedBook.title, selectedBook.author);
       setSelectedBook(null);
       setOpenDialog(false);
       setOpenSnackbar(true);
@@ -59,7 +62,7 @@ const ReadingList: React.FC = () => {
           ) : (
             readingList.map((book) => (
               <Box
-                key={book.title}
+                key={`${book.title}-${book.author}`}
                 sx={{
                   display: "flex",
                   alignItems: "center",
@@ -105,7 +108,7 @@ const ReadingList: React.FC = () => {
                     top: "50%",
                     transform: "translateY(-50%)",
                   }}
-                  onClick={() => handleDeleteClick(book.title)}
+                  onClick={() => handleDeleteClick(book.title, book.author)}
                 >
                   <DeleteIcon />
                 </IconButton>
