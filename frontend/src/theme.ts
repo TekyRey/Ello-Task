@@ -7,17 +7,17 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: "#28B8B8",
+      main: "#CFFAFA",
     },
     secondary: {
       main: "#CFFAFA",
     },
     success: {
-        main: "#FAAD00",
-        },
+      main: "#28B8B8",
+    },
     background: {
       default: "#CFFAFA",
-      paper: "#53C2C2"
+      paper: "#53C2C2",
     },
   },
 });

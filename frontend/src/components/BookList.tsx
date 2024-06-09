@@ -43,7 +43,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
                 position: "relative",
                 mb: 3,
                 ml: 3,
-                overflow: "visible", // Allow overflow to be visible
+                overflow: "visible",
               }}
             >
               <Card
@@ -67,7 +67,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
                   component="img"
                   sx={{
                     height: 250,
-                    width: 200, 
+                    width: 200,
                     boxShadow: 10,
                     borderRadius: 1,
                     mb: 1,
@@ -83,7 +83,27 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
                     {`by ${book.author}`}
                   </Typography>
                 </Box>
-                <Tooltip title="Add to reading list">
+                <Tooltip
+                  title="Add to reading list"
+                  arrow
+                  componentsProps={{
+                    tooltip: {
+                      sx: {
+                        fontSize: "14px", 
+                        backgroundColor: "primary.main", 
+                        color: "success.main", 
+                        fontWeight: 600, 
+                        adding: "8px", 
+                        borderRadius: "4px", 
+                      },
+                    },
+                    arrow: {
+                      sx: {
+                        color: "primary.main", // Match arrow color to tooltip
+                      },
+                    },
+                  }}
+                >
                   <Fab
                     color="success"
                     size="small"
