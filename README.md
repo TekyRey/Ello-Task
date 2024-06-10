@@ -1,4 +1,5 @@
-![Ello Logo](/frontend/src/assets/ello.png)
+ ![svgviewer-output](https://github.com/ElloTechnology/backend_takehome/assets/3518127/561bc8d4-bffc-4360-b9ea-61e876bcec93)
+
 # Ello Book Assignment UI
 
 ## Overview
@@ -95,8 +96,6 @@ Thank you for reviewing my solution for the Ello Engineering Challenge. I look f
 
 ## Acknowledgements
 Special Thanks to the Ello Team for inspiration
-![Ello Logo](/frontend/src/assets/ello.png)
-
 
 Best regards,
 Rehema Mwaka Baya
