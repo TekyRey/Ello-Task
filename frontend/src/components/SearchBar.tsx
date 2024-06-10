@@ -114,8 +114,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
             placeholder="Search books"
             variant="outlined"
             sx={{
-              width: "100%", // Make the input field full width
-              maxWidth: 600, // Set max width for large screens
+              width: "100%", 
+              maxWidth: 600, 
               ".MuiOutlinedInput-root": {
                 borderRadius: "50px",
                 paddingRight: 0,

@@ -12,7 +12,7 @@ const App: React.FC = () => {
   const [filteredBooks, setFilteredBooks] = useState<any[]>([]);
   const [selectedBook, setSelectedBook] = useState<any | null>(null);
   const { data, loading, error } = useQuery(GET_BOOKS);
-  const isMobileOrTablet = useMediaQuery("(max-width: 768px)");
+  const isMobileOrTablet = useMediaQuery("(max-width: 820px)");
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
@@ -43,7 +43,8 @@ const App: React.FC = () => {
       sx={{
         padding: { xs: 2, md: 4 },
         overflow: "hidden",
-        maxWidth: "100%", // Prevent horizontal overflow
+        maxWidth: "100%", 
+        maxHeight: "100vh",
         boxSizing: "border-box",
       }}
     >

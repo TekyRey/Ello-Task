@@ -105,7 +105,7 @@ const ReadingList: React.FC = () => {
                 color="error"
                 sx={{
                   position: "absolute",
-                  right: 8, // Ensure consistent positioning
+                  right: 8, 
                   top: "50%",
                   transform: "translateY(-50%)",
                 }}
