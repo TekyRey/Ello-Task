@@ -72,20 +72,7 @@ This project is part of the Ello Engineering Challenge. It features a teacher-fa
 
 ## Project Demonstration View
 
-### Desktop View
-![Desktop View](/frontend/src/assets/demo/web1.png)
-![Desktop View](/frontend/src/assets/demo/web2.png)
-![Desktop View](/frontend/src/assets/demo/web3.png)
-
-
-### Tablet View
-![Tablet View](/frontend/src/assets/demo/ipad1.png)
-![Tablet View](/frontend/src/assets/demo/ipad2.png)
-
-
-### Mobile View
-![Mobile View](/frontend/src/assets/demo/mobile1.png)
-![Mobile View](/frontend/src/assets/demo/mobile2.png)
+![Project View](/frontend/src/assets/demo/demo.png)
 
 
 ## Contact
