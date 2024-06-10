@@ -20,32 +20,38 @@ const placeholderImage = "url_to_placeholder_image"; // Replace with a valid pla
 
 const BookList: React.FC<BookListProps> = ({ books }) => {
   const { addToReadingList } = useReadingList();
-  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarState, setSnackbarState] = useState({
+    open: false,
+    message: "",
+    severity: "success" as "success" | "warning" | "error",
+  });
 
   const handleAddToReadingList = (book: any) => {
     const addedSuccessfully = addToReadingList(book);
-    if (!addedSuccessfully) {
-      setOpenSnackbar(true);
+    if (addedSuccessfully) {
+      setSnackbarState({
+        open: true,
+        message: "Book added to reading list!",
+        severity: "success",
+      });
+    } else {
+      setSnackbarState({
+        open: true,
+        message: "Book is already on your reading list!",
+        severity: "warning",
+      });
     }
   };
 
   const handleCloseSnackbar = () => {
-    setOpenSnackbar(false);
+    setSnackbarState((prevState) => ({ ...prevState, open: false }));
   };
 
   return (
     <Card sx={{ maxHeight: "80vh", overflowY: "auto", p: 3 }}>
       <Grid container spacing={2}>
         {books.map((book: any) => (
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            md={4}
-            lg={3}
-            
-            key={`${book.title}-${book.author}`}
-          >
+          <Grid item xs={12} sm={6} md={4} lg={3} key={`${book.title}-${book.author}`}>
             <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
               <Card
                 sx={{
@@ -58,7 +64,6 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
                   borderRadius: 1,
                   height: 330,
                   width: 200,
-                  color: "secondary",
                   bgcolor: "background.default",
                   variant: "outlined",
                   overflow: "visible",
@@ -70,7 +75,6 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
                     height: 250,
                     objectFit: "cover",
                     width: "100%",
-
                     boxShadow: 10,
                     borderRadius: 1,
                     mb: 1,
@@ -127,13 +131,13 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
         ))}
       </Grid>
       <Snackbar
-        open={openSnackbar}
+        open={snackbarState.open}
         autoHideDuration={3000}
         onClose={handleCloseSnackbar}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
-        <Alert onClose={handleCloseSnackbar} severity="warning">
-          Book is already on your reading list!
+        <Alert onClose={handleCloseSnackbar} severity={snackbarState.severity}>
+          {snackbarState.message}
         </Alert>
       </Snackbar>
     </Card>

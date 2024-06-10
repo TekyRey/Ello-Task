@@ -10,6 +10,7 @@ import {
   ListItemAvatar,
   ListItemText,
   CardMedia,
+  useMediaQuery,
 } from "@mui/material";
 
 interface SearchBarProps {
@@ -31,6 +32,12 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   const { data } = useQuery(GET_BOOKS);
   const [options, setOptions] = useState<Array<string | Book>>([]);
+
+  // Define media queries
+  const isMobile = useMediaQuery((theme: any) => theme.breakpoints.down("sm"));
+  const isTablet = useMediaQuery((theme: any) =>
+    theme.breakpoints.between("sm", "md")
+  );
 
   useEffect(() => {
     if (data && data.books) {
@@ -124,7 +131,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
             placeholder="Search books"
             variant="outlined"
             sx={{
-              width: { xs: "100%", sm: "80%", md: 600 },
+              width: isMobile ? "100%" : isTablet ? "80%" : 600,
               ".MuiOutlinedInput-root": {
                 borderRadius: "50px",
                 paddingRight: 0,

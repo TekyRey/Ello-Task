@@ -15,7 +15,6 @@ import {
   Button,
   Divider,
   useMediaQuery,
-  Modal,
 } from "@mui/material";
 import { useReadingList } from "../context/ReadingListContext";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -28,7 +27,6 @@ const ReadingList: React.FC = () => {
     title: string;
     author: string;
   } | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
   const isMobileOrTablet = useMediaQuery("(max-width: 768px)");
 
   const handleDeleteClick = (title: string, author: string) => {
@@ -52,14 +50,6 @@ const ReadingList: React.FC = () => {
 
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);
-  };
-
-  const handleOpenModal = () => {
-    setModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
   };
 
   const readingListContent = (
@@ -132,40 +122,7 @@ const ReadingList: React.FC = () => {
 
   return (
     <>
-      {isMobileOrTablet ? (
-        <>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleOpenModal}
-            sx={{ mb: 2 }}
-          >
-            View Reading List
-          </Button>
-          <Modal open={modalOpen} onClose={handleCloseModal}>
-            <Box
-              sx={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                width: "90%",
-                bgcolor: "background.paper",
-                boxShadow: 24,
-                p: 4,
-                borderRadius: 1,
-              }}
-            >
-              {readingListContent}
-              <Button onClick={handleCloseModal} sx={{ mt: 2 }}>
-                Close
-              </Button>
-            </Box>
-          </Modal>
-        </>
-      ) : (
-        readingListContent
-      )}
+      {isMobileOrTablet ? <>{readingListContent}</> : readingListContent}
       {/* Confirmation Dialog */}
       <Dialog open={openDialog} onClose={handleCloseDialog}>
         <DialogTitle>Confirm Removal</DialogTitle>

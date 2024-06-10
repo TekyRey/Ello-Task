@@ -3,18 +3,9 @@ import "./index.css";
 import SearchBar from "./components/SearchBar";
 import BookList from "./components/BookList";
 import ReadingList from "./components/ReadingList";
-import {
-  Box,
-  Grid,
-  Avatar,
-  IconButton,
-  useMediaQuery,
-  Drawer,
-  Typography,
-} from "@mui/material";
+import { Box, Typography, Grid, Avatar, Button, Modal, useMediaQuery } from "@mui/material";
 import { useQuery } from "@apollo/client";
 import { GET_BOOKS } from "./services/graphqlQueries";
-import MenuIcon from "@mui/icons-material/Menu";
 
 const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -22,7 +13,7 @@ const App: React.FC = () => {
   const [selectedBook, setSelectedBook] = useState<any | null>(null);
   const { data, loading, error } = useQuery(GET_BOOKS);
   const isMobileOrTablet = useMediaQuery("(max-width: 768px)");
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     if (data) {
@@ -36,50 +27,43 @@ const App: React.FC = () => {
     }
   }, [data, searchTerm]);
 
-  const toggleDrawer =
-    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event.type === "keydown" &&
-        ((event as React.KeyboardEvent).key === "Tab" ||
-          (event as React.KeyboardEvent).key === "Shift")
-      ) {
-        return;
-      }
-      setDrawerOpen(open);
-    };
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
-
   return (
-    <Box sx={{ padding: 2, position: "relative" }}>
-      {isMobileOrTablet && (
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          onClick={toggleDrawer(true)}
-          sx={{
-            position: "absolute",
-            top: 10,
-            left: 10,
-            zIndex: 1000,
-          }}
-        >
-          <MenuIcon />
-        </IconButton>
-      )}
+    <Box sx={{ padding: 2 }}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={9}>
           <Box mt={2}>
-            <Avatar src={require("./assets/ello.png")} sx={{ width: 70 }} />
-            <Box mb={2}>
+            <Box
+              mb={2}
+              sx={{ display: "flex", justifyContent: "space-between" }}
+            >
+              <Avatar src={require("./assets/ello.png")} sx={{ width: 70 }} />
+
               <SearchBar
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
                 setSelectedBook={setSelectedBook}
               />
             </Box>
+            {isMobileOrTablet && (
+              <Button
+                variant="contained"
+                color="success"
+                onClick={handleOpenModal}
+                sx={{ mt: 2, mb: 2 }}
+              >
+                View Reading List
+              </Button>
+            )}
             <BookList
               books={
                 selectedBook
@@ -91,22 +75,35 @@ const App: React.FC = () => {
             />
           </Box>
         </Grid>
-        {!isMobileOrTablet && <ReadingList />}
+        <Grid item xs={12} md={3}>
+          <ReadingList />
+        </Grid>
       </Grid>
       {isMobileOrTablet && (
-        <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
+        <Modal open={modalOpen} onClose={handleCloseModal}>
           <Box
-            sx={{ width: 250 }}
-            role="presentation"
-            onClick={toggleDrawer(false)}
-            onKeyDown={toggleDrawer(false)}
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "90%",
+              bgcolor: "background.default",
+              boxShadow: 24,
+              p: 4,
+              borderRadius: 1,
+            }}
           >
-            <Typography variant="h6" sx={{ p: 2 }}>
-              Reading List
-            </Typography>
             <ReadingList />
+            <Button
+              color="error"
+              onClick={handleCloseModal}
+              sx={{ mt: 2, bgcolor: "background.paper" }}
+            >
+              Close
+            </Button>
           </Box>
-        </Drawer>
+        </Modal>
       )}
     </Box>
   );
