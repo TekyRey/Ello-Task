@@ -10,7 +10,6 @@ import {
   ListItemAvatar,
   ListItemText,
   CardMedia,
-  useMediaQuery,
 } from "@mui/material";
 
 interface SearchBarProps {
@@ -32,12 +31,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   const { data } = useQuery(GET_BOOKS);
   const [options, setOptions] = useState<Array<string | Book>>([]);
-
-  // Define media queries
-  const isMobile = useMediaQuery((theme: any) => theme.breakpoints.down("sm"));
-  const isTablet = useMediaQuery((theme: any) =>
-    theme.breakpoints.between("sm", "md")
-  );
 
   useEffect(() => {
     if (data && data.books) {
@@ -69,16 +62,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        mt: { xs: 2, md: 4 },
-        px: { xs: 2, md: 4 },
-        width: "100%",
-      }}
-    >
+    <Box sx={{ width: "100%", maxWidth: 600 }}>
       <Autocomplete
         freeSolo
         options={options}
@@ -131,7 +115,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
             placeholder="Search books"
             variant="outlined"
             sx={{
-              width: isMobile ? "100%" : isTablet ? "80%" : 600,
+              width: "100%", // Make the input field full width
+              maxWidth: 600, // Set max width for large screens
               ".MuiOutlinedInput-root": {
                 borderRadius: "50px",
                 paddingRight: 0,

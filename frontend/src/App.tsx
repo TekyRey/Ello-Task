@@ -3,7 +3,7 @@ import "./index.css";
 import SearchBar from "./components/SearchBar";
 import BookList from "./components/BookList";
 import ReadingList from "./components/ReadingList";
-import { Box, Typography, Grid, Avatar, Button, Modal, useMediaQuery } from "@mui/material";
+import { Box, Grid, Avatar, Button, Modal, useMediaQuery } from "@mui/material";
 import { useQuery } from "@apollo/client";
 import { GET_BOOKS } from "./services/graphqlQueries";
 
@@ -37,22 +37,46 @@ const App: React.FC = () => {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
+
   return (
-    <Box sx={{ padding: 2 }}>
+    <Box
+      sx={{
+        padding: { xs: 2, md: 4 },
+        overflow: "hidden",
+        maxWidth: "100%", // Prevent horizontal overflow
+        boxSizing: "border-box",
+      }}
+    >
       <Grid container spacing={2}>
         <Grid item xs={12} md={9}>
-          <Box mt={2}>
+          <Box
+            mt={2}
+            sx={{
+              overflow: "hidden",
+            }}
+          >
             <Box
               mb={2}
-              sx={{ display: "flex", justifyContent: "space-between" }}
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                flexWrap: "wrap",
+                gap: 2,
+                padding: { xs: 1, md: 2 },
+              }}
             >
-              <Avatar src={require("./assets/ello.png")} sx={{ width: 70 }} />
-
-              <SearchBar
-                searchTerm={searchTerm}
-                setSearchTerm={setSearchTerm}
-                setSelectedBook={setSelectedBook}
+              <Avatar
+                src={require("./assets/ello.png")}
+                sx={{ width: { xs: 50, md: 70 }, height: { xs: 50, md: 70 } }}
               />
+              <Box sx={{ flex: 1 }}>
+                <SearchBar
+                  searchTerm={searchTerm}
+                  setSearchTerm={setSearchTerm}
+                  setSelectedBook={setSelectedBook}
+                />
+              </Box>
             </Box>
             {isMobileOrTablet && (
               <Button
@@ -76,7 +100,20 @@ const App: React.FC = () => {
           </Box>
         </Grid>
         <Grid item xs={12} md={3}>
-          <ReadingList />
+          {!isMobileOrTablet && (
+            <Box
+              sx={{
+                position: "sticky",
+                top: 20,
+                maxHeight: "80vh",
+                overflowY: "auto",
+              }}
+            >
+              <ReadingList />
+            </Box>
+          )
+
+          }
         </Grid>
       </Grid>
       {isMobileOrTablet && (
