@@ -16,8 +16,6 @@ interface BookListProps {
   books: any[];
 }
 
-const placeholderImage = "url_to_placeholder_image"; // Replace with a valid placeholder URL
-
 const BookList: React.FC<BookListProps> = ({ books }) => {
   const { addToReadingList } = useReadingList();
   const [snackbarState, setSnackbarState] = useState({
@@ -48,7 +46,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
   };
 
   return (
-    <Card sx={{ maxHeight: "80vh", overflowY: "auto", p: 3 }}>
+    <Card sx={{ maxHeight: "77vh", overflowY: "auto", p: 3 }}>
       <Grid container spacing={2}>
         {books.map((book: any) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={`${book.title}-${book.author}`}>

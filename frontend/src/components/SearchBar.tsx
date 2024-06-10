@@ -25,7 +25,6 @@ interface Book {
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
-  searchTerm,
   setSearchTerm,
   setSelectedBook,
 }) => {
